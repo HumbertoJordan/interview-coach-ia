@@ -14,6 +14,7 @@ import com.interviewcoach.dto.ApiResponseSuccessDto;
 import com.interviewcoach.dto.UserRequestDto;
 import com.interviewcoach.dto.UserResponseDto;
 import com.interviewcoach.entity.User;
+
 import com.interviewcoach.mapper.UserMapper;
 import com.interviewcoach.service.UserService;
 
@@ -34,8 +35,10 @@ public class UserController {
             @RequestBody @Valid UserRequestDto userRequestDto) {
 
         User user = userMapper.fromDto(userRequestDto);
-
+        
+        
         User savedUser = userService.createUser(user);
+        
 
         UserResponseDto responseDto = userMapper.toDto(savedUser);
 
