@@ -4,9 +4,12 @@ import java.util.List;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
+
+import com.interviewcoach.dto.LoginRequestDto;
 import com.interviewcoach.dto.UserRequestDto;
 import com.interviewcoach.entity.User;
 import com.interviewcoach.exception.EmailAlreadyExistsException;
+import com.interviewcoach.exception.InvalidCredentialException;
 import com.interviewcoach.exception.UserNotFoundException;
 import com.interviewcoach.repository.UserRepository;
 
@@ -54,6 +57,29 @@ public class UserService {
 
     public Boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
+    }
+
+    public User findByEmail(String email) {
+
+        /* passwordEncoder.matches(email, email); */
+
+        return userRepository.findByEmail(email)
+        .orElseThrow(() -> new UserNotFoundException("Usuario no encontrado con email: " + email));
+
+        
+    }
+
+    public User login(LoginRequestDto loginRequestDto) {
+        User user = findByEmail(loginRequestDto.getEmail());
+        
+        boolean passwordCorrecto = passwordEncoder.matches(loginRequestDto.getPassword(), user.getPassword());   
+        
+        if(!passwordCorrecto) {
+            throw new InvalidCredentialException("Usuario o contraseña incorrectos");
+        }
+
+        return user;
+
     }
 
 

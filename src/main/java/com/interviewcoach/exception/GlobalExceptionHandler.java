@@ -14,58 +14,85 @@ import com.interviewcoach.dto.ApiResponseErrorDto;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ApiResponseErrorDto<Void>> handleUserNotFound(
-            UserNotFoundException exception) {
+        @ExceptionHandler(UserNotFoundException.class)
+        public ResponseEntity<ApiResponseErrorDto<Void>> handleUserNotFound(
+                        UserNotFoundException exception) {
 
-        ApiResponseErrorDto<Void> response = new ApiResponseErrorDto<>();
+                ApiResponseErrorDto<Void> response = new ApiResponseErrorDto<>();
 
-        response.setSuccess(false);
-        response.setMessage(exception.getMessage());
-        response.setErrors(null);
+                response.setSuccess(false);
+                response.setMessage(exception.getMessage());
+                response.setErrors(null);
 
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(response);
-    }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiResponseErrorDto> handleValidationErrors(
-            MethodArgumentNotValidException exception) {
-            
-                Map<String, String> errors = exception.getBindingResult()
-                .getFieldErrors()
-                .stream()
-                .collect(Collectors.toMap(
-                    error -> error.getField(),
-                    error -> error.getDefaultMessage()
-                ));
-
-            ApiResponseErrorDto<Void> response = new ApiResponseErrorDto();
-
-            response.setSuccess(false);
-            response.setMessage("Error de validación");
-            response.setErrors(errors);
-
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(response);
-    }
-
-    @ExceptionHandler(EmailAlreadyExistsException.class)
-    public ResponseEntity<ApiResponseErrorDto> handleEmailAlreadyExists(
-        EmailAlreadyExistsException exception) {
-             
-            
-            ApiResponseErrorDto<Void> response = new ApiResponseErrorDto();
-
-            response.setSuccess(false);
-            response.setMessage(exception.getMessage());
-            response.setErrors(null);
-
-            return ResponseEntity
-                .status(HttpStatus.CONFLICT)
-                .body(response);
+                return ResponseEntity
+                                .status(HttpStatus.NOT_FOUND)
+                                .body(response);
         }
-    
+
+        @ExceptionHandler(MethodArgumentNotValidException.class)
+        public ResponseEntity<ApiResponseErrorDto> handleValidationErrors(
+                        MethodArgumentNotValidException exception) {
+
+                Map<String, String> errors = exception.getBindingResult()
+                                .getFieldErrors()
+                                .stream()
+                                .collect(Collectors.toMap(
+                                                error -> error.getField(),
+                                                error -> error.getDefaultMessage()));
+
+                ApiResponseErrorDto<Void> response = new ApiResponseErrorDto();
+
+                response.setSuccess(false);
+                response.setMessage("Error de validación");
+                response.setErrors(errors);
+
+                return ResponseEntity
+                                .status(HttpStatus.BAD_REQUEST)
+                                .body(response);
+        }
+
+        @ExceptionHandler(EmailAlreadyExistsException.class)
+        public ResponseEntity<ApiResponseErrorDto> handleEmailAlreadyExists(
+                        EmailAlreadyExistsException exception) {
+
+                ApiResponseErrorDto<Void> response = new ApiResponseErrorDto();
+
+                response.setSuccess(false);
+                response.setMessage(exception.getMessage());
+                response.setErrors(null);
+
+                return ResponseEntity
+                                .status(HttpStatus.CONFLICT)
+                                .body(response);
+        }
+
+        @ExceptionHandler(InvalidCredentialException.class)
+        public ResponseEntity<ApiResponseErrorDto> handleInvalidCredential(
+                        InvalidCredentialException exception) {
+                ApiResponseErrorDto<Void> response = new ApiResponseErrorDto();
+
+                response.setMessage(exception.getMessage());
+                response.setSuccess(false);
+
+                return ResponseEntity
+                                .status(HttpStatus.UNAUTHORIZED)
+                                .body(response);
+
+        }
+
+        @ExceptionHandler(InterviewNotFoundException.class)
+        public ResponseEntity<ApiResponseErrorDto<Void>> handleInterviewNotFound(
+                        InterviewNotFoundException exception) {
+
+                ApiResponseErrorDto<Void> response = new ApiResponseErrorDto<>();
+
+                response.setSuccess(false);
+                response.setMessage(exception.getMessage());
+                response.setErrors(null);
+
+                return ResponseEntity
+                                .status(HttpStatus.NOT_FOUND)
+                                .body(response);
+        }
+
 }
