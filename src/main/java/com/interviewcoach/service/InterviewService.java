@@ -47,8 +47,8 @@ public class InterviewService {
                 List<Interview> interviews = interviewRepository.findByUserId(userId);
 
                 return interviews.stream()
-                                .map(interviewMapper::toDto)
-                                .toList();
+        .map(interview -> interviewMapper.toDto(interview))
+        .toList();
         }
 
         public InterviewResponseDto findById(Long userId, Long interviewId) {

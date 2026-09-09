@@ -95,4 +95,19 @@ public class GlobalExceptionHandler {
                                 .body(response);
         }
 
+        @ExceptionHandler(DocumentNotFoundException.class)
+        public ResponseEntity<ApiResponseErrorDto<Void>> handleDocumentNotFound(
+                        DocumentNotFoundException exception) {
+
+                ApiResponseErrorDto<Void> response = new ApiResponseErrorDto<>();
+
+                response.setSuccess(false);
+                response.setMessage(exception.getMessage());
+                response.setErrors(null);
+
+                return ResponseEntity
+                                .status(HttpStatus.NOT_FOUND)
+                                .body(response);
+        }
+
 }
