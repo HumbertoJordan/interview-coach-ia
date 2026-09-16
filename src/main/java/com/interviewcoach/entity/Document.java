@@ -1,6 +1,7 @@
 package com.interviewcoach.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -22,9 +23,14 @@ public class Document {
     private Long id;
 
     private String title;
+
     private String description;
+
     private String filePath;
-    
+
+    @Enumerated(jakarta.persistence.EnumType.STRING)
+    private DocumentType type;
+
     @ManyToOne
     @JoinColumn(name = "interview_id", nullable = false)
     private Interview interview;

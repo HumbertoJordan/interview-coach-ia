@@ -1,7 +1,7 @@
 package com.interviewcoach.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import com.interviewcoach.entity.DocumentType;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class DocumentResponseDto {
-    
+
     private Long id;
 
     private String title;
@@ -18,6 +18,8 @@ public class DocumentResponseDto {
     private String description;
 
     private String filePath;
+
+    private DocumentType type;
 
     private Long interviewId;
 }

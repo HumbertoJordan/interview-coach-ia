@@ -8,7 +8,7 @@ import com.interviewcoach.entity.Document;
 
 @Component
 public class DocumentMapper {
-    
+
     public Document fromDto(DocumentRequestDto dto) {
 
         Document document = new Document();
@@ -16,6 +16,7 @@ public class DocumentMapper {
         document.setTitle(dto.getTitle());
         document.setDescription(dto.getDescription());
         document.setFilePath(dto.getFilePath());
+        document.setType(dto.getType());
 
         return document;
     }
@@ -28,11 +29,12 @@ public class DocumentMapper {
         dto.setTitle(document.getTitle());
         dto.setDescription(document.getDescription());
         dto.setFilePath(document.getFilePath());
+        dto.setType(document.getType());
+
         if (document.getInterview() != null) {
             dto.setInterviewId(document.getInterview().getId());
         }
 
         return dto;
-
     }
 }
