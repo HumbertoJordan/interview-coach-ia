@@ -69,6 +69,7 @@ public class GlobalExceptionHandler {
         @ExceptionHandler(InvalidCredentialException.class)
         public ResponseEntity<ApiResponseErrorDto> handleInvalidCredential(
                         InvalidCredentialException exception) {
+
                 ApiResponseErrorDto<Void> response = new ApiResponseErrorDto();
 
                 response.setMessage(exception.getMessage());
@@ -77,7 +78,6 @@ public class GlobalExceptionHandler {
                 return ResponseEntity
                                 .status(HttpStatus.UNAUTHORIZED)
                                 .body(response);
-
         }
 
         @ExceptionHandler(InterviewNotFoundException.class)
@@ -110,4 +110,18 @@ public class GlobalExceptionHandler {
                                 .body(response);
         }
 
+        @ExceptionHandler(IllegalStateException.class)
+        public ResponseEntity<ApiResponseErrorDto<Void>> handleIllegalState(
+                        IllegalStateException exception) {
+
+                ApiResponseErrorDto<Void> response = new ApiResponseErrorDto<>();
+
+                response.setSuccess(false);
+                response.setMessage(exception.getMessage());
+                response.setErrors(null);
+
+                return ResponseEntity
+                                .status(HttpStatus.CONFLICT)
+                                .body(response);
+        }
 }
