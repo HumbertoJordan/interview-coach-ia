@@ -29,5 +29,5 @@ Campos principales:
 
 Relación:
 
-```text
-Interview 1 ─────── 1 InterviewAnalysis
+
+Interview 1 ─────── 1 InterviewAnalysis 
